@@ -123,6 +123,13 @@ def doDecompress(filename) :
 
     writeDecompressFile(res.getvalue(),filename,filetype)
 
+# ========== Input validation ========= #
+def validExt(filename) :
+    return (filename[1] == "txt" or filename[1] == "tif" or filename[1] == "tiff")
+
+def validQuery(query) :
+    return (query == "compress" or query == "decompress")
+
 # ========== Main Function ========== #
 def main() :
 
@@ -133,7 +140,7 @@ def main() :
             filename = sys.argv[2].split(".")
 
             # Validation again
-            if (query != "compress" and query != "decompress" and filename[1] != "txt" and filename[1] != "gif" and filename[1] != "tiff" and filename[1] != "tif") :
+            if (not(validExt(filename)) or not(validQuery(query))) :
                 print("Wrong arguments ! Check your query and/or your input file :(")
             else :
                 if (query == "compress") :
