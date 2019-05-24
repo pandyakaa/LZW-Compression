@@ -125,7 +125,7 @@ def doDecompress(filename) :
 
 # ========== Input validation ========= #
 def validExt(filename) :
-    return (filename[1] == "txt" or filename[1] == "tif" or filename[1] == "tiff")
+    return (filename[1] == "txt" or filename[1] == "tif" or filename[1] == "tiff" or filename[1] == "gif")
 
 def validQuery(query) :
     return (query == "compress" or query == "decompress")
