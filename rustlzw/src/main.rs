@@ -38,8 +38,18 @@ fn write_compress(text: String, filename: &Vec<&str>) -> std::io::Result<()> {
 }
 
 // =========== Write External File after deCompression =========
-fn write_decompress(text: String, filename: Vec<&str>, ex: String) {
+fn write_decompress(text: String, filename: Vec<&str>, ex: String) -> std::io::Result<()> {
 
+    if ex == "txt" {
+        let mut file = File::create(filename[0].to_owned()+".txt")?;
+        file.write_all(&text.as_bytes());
+        Ok(())
+    } else {
+        let image = image_base64::from_base64(text);
+        let mut file = File::create(filename[0].to_owned()+"."+&ex.to_owned())?;
+        file.write_all(&image);
+        Ok(())
+    }
 }
 
 // =========== Make the dictionary (array of char) ==========
@@ -106,31 +116,30 @@ fn do_decompress(filename: &Vec<&str>) {
 
     let mut res = String::new();
     let clonedict = dict.clone();
-    let mut word = clonedict.get(&tempv[0]).unwrap();
-    res = res + word;
+    let mut word = clonedict.get(&tempv[0]).unwrap().to_string();
+    let tempw = word.clone();
+    res = res + &tempw;
 
     let mut entry = String::new();
-    let tempv2: Vec<u32> = tempv[1..].to_vec();
-    for k in &tempv2 {
+    for k in &tempv[1..] {
         if dict.contains_key(&k) {
             entry = dict.get(&k).unwrap().to_string();
         } else if k == &(dict.len() as u32) {
-            let c = word.chars().nth(0).unwrap().to_string();
-            entry = word.to_string() + &c;
+            let c = word.clone();
+            let worc = word.clone();
+            entry = worc + &c[0..1] ;
         }
 
-        res = res + &entry.clone();
+        let tempe = entry.clone();
+        res = res + &tempe;
+        let tempw2 = word.clone();
+        dict.insert(dict.len() as u32, tempw2 + &entry[0..1]);
 
-        let ch = entry.chars().nth(0).unwrap().to_string();
-        let tempw = word.to_string() + &ch;
-
-        dict.insert(dict.len() as u32, tempw);
-        
-        word = &entry.clone();
+        let tempe2 = entry.clone();
+        word = tempe2;
     }
-
-    println!("{}",res );
-    //write_decompress(res, filename.to_vec(), filetype.to_string());
+    
+    write_decompress(res, filename.to_vec(), filetype.to_string());
 }
 
 // ========== Input validation =========
