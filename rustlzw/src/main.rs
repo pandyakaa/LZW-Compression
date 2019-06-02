@@ -42,12 +42,12 @@ fn write_decompress(text: String, filename: Vec<&str>, ex: String) -> std::io::R
 
     if ex == "txt" {
         let mut file = File::create(filename[0].to_owned()+".txt")?;
-        file.write_all(&text.as_bytes());
+        file.write_all(&text.as_bytes()).expect("Error to decompress txt !");
         Ok(())
     } else {
         let image = image_base64::from_base64(text);
         let mut file = File::create(filename[0].to_owned()+"."+&ex.to_owned())?;
-        file.write_all(&image);
+        file.write_all(&image).expect(&("Error to decompress ".to_owned() + &ex.to_string() +" !"));
         Ok(())
     }
 }
@@ -95,7 +95,7 @@ fn do_compress(filename: &Vec<&str>) {
     }
 
     res = res + &dict.get(&word).unwrap().to_string();
-    write_compress(res, &filename);
+    write_compress(res, &filename).expect("Error write compress file !");
 }
 
 // ========== Function to deCompress ==========
@@ -139,7 +139,7 @@ fn do_decompress(filename: &Vec<&str>) {
         word = tempe2;
     }
     
-    write_decompress(res, filename.to_vec(), filetype.to_string());
+    write_decompress(res, filename.to_vec(), filetype.to_string()).expect("Error write decompress file !");
 }
 
 // ========== Input validation =========
