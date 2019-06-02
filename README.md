@@ -8,15 +8,21 @@ Algoritma kompresi LZW (Lempel–Ziv–Welch) adalah sebuah metode kompresi *los
 ## Cara Penggunaan
 1. Silahkan clone repository ini
 2. Masukkan _file_ yang ingin dikompresi dan atau didekompresi pada **direktori** yang sama dengan _program_ ini, dan pastikan bahwa _file_ tersebut memiliki ekstensi **txt** atau **gif** atau **tif** atau **tiff**
-3. Ketikkan perintah :
+3. Untuk menggunakan LZW Compression dengan file python => masuk ke folder pythonlzw :
+Ketikkan perintah :
 ```
 python lzw.py [compress | decompress] <namafile>.<ekstensifile>
 ```
-4. Format _file_ hasil kompresi adalah :
+4. Untuk menggunakan LZW Compression dengan file rust => masuk ke folder rustlzw :
+Ketikkan perintah :
+```
+cargo run [compress | decompress] <namafile>.<ekstensifile>
+```
+5. Format _file_ hasil kompresi adalah :
 ```
 <namafile>.txt
 ```
-5. Format _file_ hasil dekompresi adalah :
+6. Format _file_ hasil dekompresi adalah :
 ```
 <namafile>.<ekstensi>
 ```
